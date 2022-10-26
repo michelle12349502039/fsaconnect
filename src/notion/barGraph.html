@@ -16,13 +16,15 @@
     <py-config type="json">
         {
             "packages": ["requests", "beautifulsoup4"],
-            "paths": ["./main.py"]
+            "paths": ["../"]
         }
     </py-config>
 
 <py-script>
 
-    print("test")
+    from .main import pullGrades
+
+    print(main.pullGrades("mk0207.fsa", "Mk020772"))
 
 
 </py-script>
