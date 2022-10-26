@@ -1,6 +1,7 @@
 import threading
 import yaml
-from grabber import *
+from gradegrabber import *
+from assignmentgrabber import *
 from yaml.loader import *
 
 
@@ -16,6 +17,11 @@ def gradeUpdater():
     grades = pullGrades(username, password)
     print(grades)
 
+def assignmentUpdater():
+    threading.Timer(15.0, gradeUpdater).start()
+    upcoming = pullAssignments(username, password)
+    print(upcoming)
 
 while True:
     gradeUpdater()
+    assignmentUpdater()

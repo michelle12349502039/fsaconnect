@@ -43,5 +43,6 @@ def pullGrades(username: str, password: str) -> dict:
                 gradesDict[text.translate({ord(k): None for k in digits}).replace("(", "").replace(".", "").replace("%","").replace(")","").replace("  ", ": ")] = float(substring)
     return gradesDict
             
+    
 
           
