@@ -63,12 +63,17 @@ Fsa Grades
     <p>Output:</p>
     <p id = 'o_username'></p>
     <p id = 'o_password'></p>
+    <p id = 'o_grades'></p>
     <py-script>
+        import gradegrabber
 
         def sub(*args,**kwargs):
             Element('o_username').write("Username: " + Element('user').value)
             Element('o_password').write("Password: " + Element('pass').value)
-    
+            Element('o_grades').write(gradegrabber.pullGrades(Element('user').value, Element('pass').value))
+            
+
+
     </py-script>
 
 </body>

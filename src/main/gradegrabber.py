@@ -40,7 +40,7 @@ def pullGrades(username: str, password: str) -> dict:
             if text[text.rfind("(")+1:text.rfind(")")-3].isnumeric() or search(".", text[text.rfind("(")+1:text.rfind(")")-3]):
                 substring = text[in1:in2]
 
-                gradesDict[text.translate({ord(k): None for k in digits}).replace("(", "").replace(".", "").replace("%","").replace(")","").replace("  ", ": ")] = float(substring)
+                gradesDict[text.translate({ord(k): None for k in digits}).replace("(", "").replace(".", "").replace("%","").replace(")","").replace("  ", "")] = float(substring)
     return gradesDict
             
     
