@@ -15,6 +15,7 @@ bs4 = "^0.0.1"
 reportlab = "^3.6.11"
 svglib = "^1.4.1"
 progress = "^1.6"
+matplotlib = "^3.6.1"
 
 [tool.poetry.dev-dependencies]
 debugpy = "^1.6.2"
