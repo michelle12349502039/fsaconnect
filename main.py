@@ -1,17 +1,21 @@
+USER_PATH = "CHANGE ME TO THE LOCATION OF YOUR PROJECT FOLDER" #example: USER_PATH = "C:/Users/14704/Desktop/fsaconnect/fsaconnect"
+import sys
+sys.path.append("{}/src/main".format(USER_PATH))
+sys.path.append("{}/src/notion".format(USER_PATH))
+sys.path.append("{}/src/discord".format(USER_PATH))
+sys.path.append("{}/src/discord".format(USER_PATH))
+sys.path.append("{}".format(USER_PATH))
+import sys
 import threading
 import yaml
 import sys
-sys.path.append("./")
-sys.path.append("./src/main")
-sys.path.append("./src/notion")
-sys.path.append("./src/discord")
 from gradegrabber import *
 from assignmentgrabber import *
 from yaml.loader import *
 from barGraph import *
 
 
-with open('testconfig.yaml', 'r') as f:
+with open('C:/Users/14704/Desktop/fsaconnect/fsaconnect/testconfig.yaml', 'r') as f:
     data = yaml.load(f, Loader=SafeLoader)
     fcdata = data['FSACONNECT']
     username = fcdata['Username']
