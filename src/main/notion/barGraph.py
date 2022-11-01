@@ -15,4 +15,4 @@ def barGraph(usern, passw):
   plt.xlabel("Courses")
   plt.ylabel("Grade")
   plt.title(usern)
-  plt.show()
+  fig

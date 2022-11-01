@@ -1,28 +1,25 @@
-USER_PATH = "CHANGE ME TO THE LOCATION OF YOUR PROJECT FOLDER" #example: USER_PATH = "C:/Users/14704/Desktop/fsaconnect/fsaconnect"
+
+import yaml
+import threading
 import sys
+
+# example: USER_PATH = "C:/Users/14704/Desktop/fsaconnect/fsaconnect"
+USER_PATH = "C:/Users/14704\Desktop/fsa connect/fsaconnect/"
 sys.path.append("{}/src/main".format(USER_PATH))
 sys.path.append("{}/src/notion".format(USER_PATH))
 sys.path.append("{}/src/discord".format(USER_PATH))
 sys.path.append("{}/src/discord".format(USER_PATH))
 sys.path.append("{}".format(USER_PATH))
-import sys
-import threading
-import yaml
-import sys
-from gradegrabber import *
-from assignmentgrabber import *
-from yaml.loader import *
-from barGraph import *
+from grabber import *
 
-
-with open('C:/Users/14704/Desktop/fsaconnect/fsaconnect/testconfig.yaml', 'r') as f:
-    data = yaml.load(f, Loader=SafeLoader)
+with open('C:/Users/14704\Desktop/fsa connect/fsaconnect/testconfig.yaml', 'r') as f:
+    data = yaml.load(f, Loader=yaml.SafeLoader)
     fcdata = data['FSACONNECT']
     username = fcdata['Username']
     password = fcdata['Password']
-    
 
-#constantly check for grade updates
+
+# constantly check for grade updates
 def updater():
     threading.Timer(15.0, updater).start()
     grades = pullGrades(username, password)
@@ -30,8 +27,8 @@ def updater():
     upcoming = pullAssignments(username, password)
     print(upcoming)
 
-while True:
-    updater()
-    barGraph(username, password)
-    
 
+while True:
+    barGraph(username, password)
+    updater()
+    
