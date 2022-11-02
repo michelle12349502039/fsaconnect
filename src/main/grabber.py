@@ -125,9 +125,5 @@ def pullAssignments(username, password) -> dict:
         
       
 
-  
-pullAssignments("ck1104.fsa", "Ck110455")
-
-
 
 
