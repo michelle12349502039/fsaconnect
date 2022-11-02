@@ -1,16 +1,20 @@
 import os
 import getpass
 import re
+import io
 from re import search
+from tkinter.font import families
+from more_itertools import strip
 from requests import Session
+import requests
 from bs4 import BeautifulSoup as bs
 from string import digits
 import numpy as np
 import matplotlib.pyplot as plt
 from soupsieve import select
-
-
-
+import pandas as pd
+from json import loads
+from pandas.plotting import table 
 
 def pullGrades(username: str, password: str) -> dict:
     """
@@ -65,19 +69,18 @@ def pullGrades(username: str, password: str) -> dict:
 
 # creating the dataset
 def barGraph(usern, passw):
-  data = pullGrades(usern, passw)
-  courses = list(data.keys())
-  values = list(data.values())
-  fig = plt.figure(figsize = (16, 5))
+    data = pullGrades(usern, passw)
+    courses = list(data.keys())
+    values = list(data.values())
+    fig = plt.figure(figsize=(16, 5))
 # creating the bar plot
-  plt.bar(courses, values, color ='maroon',
-        width = 0.4)
-  plt.xlabel("Courses")
-  plt.ylabel("Grade")
-  plt.title(usern)
-  plt.savefig('graph.png')
-
-
+    plt.bar(courses, values, color='maroon',
+            width=0.4)
+    plt.xlabel("Courses")
+    plt.ylabel("Grade")
+    plt.title(usern)
+    plt.savefig('graph.png')
+    plt.close()
 
 
 def pullAssignments(username, password) -> dict:
@@ -92,17 +95,39 @@ def pullAssignments(username, password) -> dict:
         assignment_page = s.get(
             "https://fultonscienceacademy.radixlms.com/blocks/radix_dashboard/upcomingassignments.php")
         assignment_content = bs(assignment_page.content, "html.parser")
-        name = assignment_content.find_all("a", href=lambda href: href and "mod/assign" in href)
-        duedate = assignment_content.find_all(lambda tag: 'data-text' in tag.attrs)
-        nameList=[]
-        dateList=[]
-        for i in name:
-          nameList.append(i.text.strip())
-        for i in duedate:
-          dateList.append(i.text.strip())
-        assignmentList=dict(zip(nameList, dateList))
-        return assignmentList
+        table = assignment_content.find("tbody")
+        table_rows = table.find_all('tr')
+        data = {}
+        for tr in table_rows:
+            td = tr.find_all('td')
+            data[td[1].text] = td[0].text.strip()
+            
+        #matplotlib table code
+        fig, ax = plt.subplots(figsize=(16, 5))
+        ax.axis('tight')
+        ax.axis('off')
+     
+        the_table = ax.table(cellText=list(data.items()), colLabels=['Assignment', 'Due Date'], loc='center', cellLoc='center', colWidths=[0.9, 0.4]) 
+        the_table.auto_set_font_size(False)
+        the_table.set_fontsize(16)
+        the_table.scale(1, 1.8)
+        #bold colLabels
+        for (row, col), cell in the_table.get_celld().items():
+            if (row == 0):
+                cell.set_text_props(weight='bold')
         
+     
+
+     
+        plt.savefig('table.png', bbox_inches='tight')
+        plt.close()
+
+        
+      
 
   
+pullAssignments("ck1104.fsa", "Ck110455")
+
+
+
 
