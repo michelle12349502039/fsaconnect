@@ -39,22 +39,28 @@ async def config(ctx):
     embed = discord.Embed(description="Please enter your FSA Connect **username**",
                           color=discord.Color.from_rgb(193, 154, 183))
     await ctx.author.send(embed=embed)
-    username = await client.wait_for('message', check=lambda message: message.author == ctx.author and message.channel.id == ctx.author.dm_channel.id)
+    try:
+      username = await client.wait_for('message', check=lambda message: message.author == ctx.author and message.channel.id == ctx.author.dm_channel.id,timeout=60)
+      embed.description = "Please enter your FSA Connect **password**"
+      try:
+        password = await client.wait_for('message', check=lambda message: message.author == ctx.author, timeout=60)
+        data = {ctx.author.id: {'username': username.content,
+                            'password': password.content}}
+        with open('C:/Users/14704\Desktop/fsa connect/fsaconnect/discord/configs.yaml', 'r') as f:
+            current_yaml = yaml.safe_load(f)
+            current_yaml.update(data)
+        if current_yaml:
+            with open('C:/Users/14704\Desktop/fsa connect/fsaconnect/discord/configs.yaml', 'w') as f:
+                yaml.safe_dump(current_yaml, f)
+        embed.description = "Config saved succesfully, enjoy!"
+        await ctx.author.send(embed=embed)
+      except:
+        ctx.author.send("You have ran out of time to send your password. Please run this commmand again")
+    except:
+      ctx.author.send("You have ran out of time to send your username. Please run this commmand again")
     embed.description = "Please enter your FSA Connect **password**"
     await ctx.author.send(embed=embed)
-    password = await client.wait_for('message', check=lambda message: message.author == ctx.author)
-    data = {ctx.author.id: {'username': username.content,
-                            'password': password.content}}
-    print(data)
-    with open('C:/Users/14704\Desktop/fsa connect/fsaconnect/discord/configs.yaml', 'r') as f:
-        current_yaml = yaml.safe_load(f)
-        current_yaml.update(data)
-    if current_yaml:
-        with open('C:/Users/14704\Desktop/fsa connect/fsaconnect/discord/configs.yaml', 'w') as f:
-            yaml.safe_dump(current_yaml, f)
-    embed.description = "Config saved succesfully, enjoy!"
-    await ctx.author.send(embed=embed)
-
+    
 
 @client.command()
 async def mygrades(message):
