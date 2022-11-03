@@ -110,4 +110,4 @@ async def help(message):
     await message.channel.send(embed=embed)
 
 client.run(
-    "MTAzNjc4NjY5MDc3MTE0NDczNA.GqTwyj.hPnSD1N-huEspxptLdhvvfpeIsaUnlq5jZ0RcY")
+    "fuck u")
